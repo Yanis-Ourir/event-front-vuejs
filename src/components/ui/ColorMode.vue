@@ -3,7 +3,7 @@
             border border-white/20 dark:border-gray-600 
             backdrop-blur-lg shadow-[inset_0_0_8px_rgba(255,255,255,0.2)]">
     <button @click="toggleDarkMode">
-      {{ isDarkMode ? '🌞 Light Mode' : '🌙 Dark Mode' }}
+      {{ isDarkMode ? '🌞' : '🌙' }}
     </button>
   </div>
 </template>
