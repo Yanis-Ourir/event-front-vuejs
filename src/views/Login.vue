@@ -2,12 +2,12 @@
     <div class="flex flex-col justify-center h-100 items-center mt-12 md:mt-44">
         <form class="flex flex-col bg-gray-900 p-10 md:p-16 rounded-2xl border border-white/20 backdrop-blur-lg shadow-lg w-full max-w-md"
             @submit.prevent="">
-            <!-- Titre -->
+
             <h1 class="text-4xl font-bold text-white text-center mb-8">
                 LOGIN <span class="text-gradient">EVENTLY</span>
             </h1>
 
-            <!-- Email -->
+      
             <label for="email" class="text-gray-300 mb-2">Email</label>
             <div class="relative">
                 <input type="email" id="email" placeholder="johndoe@gmail.com"
@@ -17,7 +17,7 @@
                 </span>
             </div>
 
-            <!-- Password -->
+         
             <label for="password" class="text-gray-300 mt-4 mb-2">Password</label>
             <div class="relative">
                 <input type="password" id="password" placeholder="********"
@@ -27,24 +27,24 @@
                 </span>
             </div>
 
-            <!-- Mot de passe oublié -->
+          
             <a href="#" class="text-gray-400 text-right text-sm mt-2 hover:underline hover:text-white">
                 Forgot password?
             </a>
 
-            <!-- Bouton Login -->
+         
             <button type="submit"
                 class="relative flex justify-center items-center bg-gradient-to-r from-[#673AB7] to-[#9C27B0] text-white rounded-4xl py-3 mt-6 font-semibold text-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9C27B0]">
                 Login
             </button>
 
-            <!-- Inscription -->
+      
             <p class="text-center text-gray-400 text-sm mt-4">
                 Don't have an account?
                 <a href="/register" class="text-white hover:underline">Sign up</a>
             </p>
 
-            <!-- Bouton Google -->
+        
             <button class="flex items-center justify-center bg-gray-800 text-gray-300 border border-gray-600 rounded-xl py-2 mt-6 gap-4 hover:bg-gray-700 transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262" class="h-6">
                     <path fill="#4285F4"

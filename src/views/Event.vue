@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 import EventCard from '@/components/ui/EventCard.vue';
 import PastEventCard from '@/components/ui/PastEventCard.vue';
+import EventForm from '@/components/EventForm.vue';
 
 const templateEvent = [
     {
@@ -31,21 +32,44 @@ const templateEvent = [
 ];
 
 const now = new Date();
-
 const pastEvents = computed(() => templateEvent.filter(event => new Date(event.date) < now));
 const upcomingEvents = computed(() => templateEvent.filter(event => new Date(event.date) >= now));
+
+const showUpcomingEvents = ref(true);
+const showPastEvents = ref(false);
+const formModal = ref(false);
+
+const selectUpcomingEvents = () => {
+    showUpcomingEvents.value = true;
+    showPastEvents.value = false;
+}
+
+const selectPastEvents = () => {
+    showUpcomingEvents.value = false;
+    showPastEvents.value = true;
+}
+
 </script>
 
 <template>
     <div class="container mx-auto px-6 md:px-12 py-12">
-        <!-- Titre -->
+    
         <h1 class="text-4xl font-bold text-center text-white mb-10">
             🎟️ <span class="bg-gradient-to-r from-[#673AB7] to-[#9C27B0] text-transparent bg-clip-text">Evently: Upcoming & Past Events</span>
+                
         </h1>
+        <button @click="formModal = !formModal" class="text-gray-400 hover:text-white focus:outline-none">
+            New Event📝
+        </button>
+        <div id="event-select-status" class="grid grid-cols-2 md:grid-cols-2 gap-6 text-center">
+            <h2 @click="selectUpcomingEvents" class="text-2xl font-semibold text-gray-500 mb-6 cursor-pointer hover:text-white" :class="{'text-white' : showUpcomingEvents}">📅 Upcoming Events</h2>
+            
+            <h3 @click="selectPastEvents" class="text-2xl font-semibold text-gray-500 mb-6 cursor-pointer hover:text-white" :class="{'text-white' : showPastEvents}">⏳ Past Events</h3>
+        </div>
 
-        <!-- Événements à venir -->
-        <section>
-            <h2 class="text-2xl font-semibold text-white mb-6">📅 Upcoming Events</h2>
+       
+        <section id="upcoming-events" class="mt-12" v-if="showUpcomingEvents">
+            
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div v-for="event in upcomingEvents" :key="event.title">
                     <EventCard :title="event.title" :date="new Date(event.date).toLocaleString('en-En', {
@@ -55,9 +79,9 @@ const upcomingEvents = computed(() => templateEvent.filter(event => new Date(eve
             </div>
         </section>
 
-        <!-- Événements passés -->
-         <section class="mt-12">
-            <h2 class="text-2xl font-semibold text-gray-500 mb-6">⏳ Past Events</h2>
+  
+         <section id="past-events" class="mt-12" v-if="showPastEvents">
+            
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div v-for="event in pastEvents" :key="event.title">
                 <PastEventCard :title="event.title" :date="new Date(event.date).toLocaleString('en-En', {
@@ -67,4 +91,9 @@ const upcomingEvents = computed(() => templateEvent.filter(event => new Date(eve
             </div>
         </section>
     </div>
+
+        <div class="flex flex-col justify-center h-100 items-center mt-12 md:mt-44" v-if="formModal">
+            <EventForm :formModal="formModal" @closeFormModal="formModal = false" />
+        </div>
+ 
 </template>
