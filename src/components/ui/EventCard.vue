@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 shadow-lg transition-all hover:scale-105 hover:border-[#9C27B0]">
+    <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 shadow-lg transition-all hover:border-[#9C27B0]">
         <h3 class="text-xl font-semibold text-white">{{ title }}</h3>
         <p class="text-sm text-gray-300">{{ date }}</p>
         <p class="mt-2 text-gray-400">{{ description }}</p>
