@@ -5,6 +5,13 @@ import PastEventCard from '@/components/ui/PastEventCard.vue';
 import EventForm from '@/components/EventForm.vue';
 import { Search, Calendar, LayoutGrid, Clock, Filter, Plus, ArrowUpDown } from 'lucide-vue-next';
 
+type Event = {
+  title: string;
+  date: string;
+  description: string;
+  location: string;
+};
+
 const templateEvent = [
     { title: 'React Conference 2023', date: '2023-10-15', description: 'A conference about React.', location: 'London' },
     { title: 'Vue.js Conference 2023', date: '2023-11-15', description: 'A conference about Vue.js.', location: 'Paris' },
@@ -50,8 +57,8 @@ const upcomingEvents = computed(() => {
   return sortEvents(filtered);
 });
 
-// Fonction de tri des événements
-const sortEvents = (events) => {
+
+const sortEvents = (events: Event[]) => {
   return [...events].sort((a, b) => {
     const dateA = new Date(a.date);
     const dateB = new Date(b.date);
@@ -70,7 +77,7 @@ const toggleViewMode = () => {
   viewMode.value = viewMode.value === 'grid' ? 'list' : 'grid';
 };
 
-const setActiveTab = (tab) => {
+const setActiveTab = (tab: string) => {
   activeTab.value = tab;
 };
 
@@ -103,7 +110,7 @@ const filtersPanelClass = computed(() => {
          
           <div class="relative flex-grow max-w-md">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search size="18" class="text-purple-400" />
+              <Search :size="18" class="text-purple-400" />
             </div>
             <input 
               v-model="searchQuery" 
@@ -120,7 +127,7 @@ const filtersPanelClass = computed(() => {
               class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all"
               :title="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'"
             >
-              <LayoutGrid v-if="viewMode === 'grid'" size="20" />
+              <LayoutGrid v-if="viewMode === 'grid'" :size="20" />
               <span v-else>📋</span>
             </button>
             
@@ -129,7 +136,7 @@ const filtersPanelClass = computed(() => {
               class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all flex items-center gap-1"
               :title="sortDirection === 'asc' ? 'Sort by date: newest first' : 'Sort by date: oldest first'"
             >
-              <ArrowUpDown size="20" />
+              <ArrowUpDown :size="20" />
               <span class="hidden md:inline text-sm">{{ sortDirection === 'asc' ? 'Oldest first' : 'Newest first' }}</span>
             </button>
             
@@ -138,14 +145,14 @@ const filtersPanelClass = computed(() => {
               class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all"
               :class="{'bg-purple-800': showFilters}"
             >
-              <Filter size="20" />
+              <Filter :size="20" />
             </button>
             
             <button 
               @click="formModal = true" 
               class="text-white font-medium bg-gradient-to-r from-purple-600 to-fuchsia-600 px-4 py-2 rounded-lg transition-all hover:from-purple-500 hover:to-fuchsia-500 flex items-center gap-2"
             >
-              <Plus size="18" />
+              <Plus :size="18" />
               <span class="hidden md:inline">New Event</span>
             </button>
           </div>
@@ -191,7 +198,7 @@ const filtersPanelClass = computed(() => {
           class="flex items-center gap-2 px-6 py-3 font-medium transition-all"
           :class="activeTab === 'upcoming' ? 'text-white border-b-2 border-purple-500 -mb-px' : 'text-gray-400 hover:text-white'"
         >
-          <Calendar size="20" />
+          <Calendar :size="20" />
           <span>Upcoming Events</span>
           <span v-if="upcomingEvents.length > 0" class="bg-purple-600 text-white text-xs py-0.5 px-2 rounded-full ml-1">{{ upcomingEvents.length }}</span>
         </button>
@@ -201,15 +208,15 @@ const filtersPanelClass = computed(() => {
           class="flex items-center gap-2 px-6 py-3 font-medium transition-all"
           :class="activeTab === 'past' ? 'text-white border-b-2 border-purple-500 -mb-px' : 'text-gray-400 hover:text-white'"
         >
-          <Clock size="20" />
+          <Clock :size="20" />
           <span>Past Events</span>
           <span v-if="pastEvents.length > 0" class="bg-gray-600 text-white text-xs py-0.5 px-2 rounded-full ml-1">{{ pastEvents.length }}</span>
         </button>
       </div>
       
-      <!-- Contenu principal -->
+ 
       <div class="min-h-[300px]">
-        <!-- Section des événements à venir -->
+       
         <section v-if="activeTab === 'upcoming'" class="animate-fadeIn">
           <div v-if="upcomingEvents.length > 0" :class="viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'">
             <EventCard 
@@ -226,13 +233,13 @@ const filtersPanelClass = computed(() => {
               @click="formModal = true" 
               class="mt-4 text-purple-400 hover:text-purple-300 flex items-center gap-2"
             >
-              <Plus size="18" />
+              <Plus :size="18" />
               <span>Create your first event</span>
             </button>
           </div>
         </section>
         
-        <!-- Section des événements passés -->
+
         <section v-else class="animate-fadeIn">
           <div v-if="pastEvents.length > 0" :class="viewMode === 'grid' ? 'grid md:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'">
             <PastEventCard 
@@ -256,7 +263,7 @@ const filtersPanelClass = computed(() => {
       </div>
     </div>
     
-    <!-- Modal formulaire -->
+
     <div v-if="formModal" class="fixed inset-0 flex items-center justify-center bg-black/70 z-50 backdrop-blur-sm">
       <div @click.self="formModal = false" class="fixed inset-0"></div>
       <EventForm @closeFormModal="formModal = false" />
