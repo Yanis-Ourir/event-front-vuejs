@@ -4,6 +4,9 @@ dependencies:
   '@tailwindcss/vite':
     specifier: ^4.0.11
     version: 4.0.11(vite@6.1.0)
+  lucide-vue-next:
+    specifier: ^0.482.0
+    version: 0.482.0(vue@3.5.13)
   pinia:
     specifier: ^3.0.1
     version: 3.0.1(typescript@5.7.3)(vue@3.5.13)
@@ -2895,6 +2898,14 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
+
+  /lucide-vue-next@0.482.0(vue@3.5.13):
+    resolution: {integrity: sha512-XpxrCOAnPzuH1tlKUy3U6epKAmdMfs1iEeL6ziWulGVXzNKv6anorp0v6vCdhziqvCSQ2SsGLnbOXmZ/sjjl9g==}
+    peerDependencies:
+      vue: '>=3.0.1'
+    dependencies:
+      vue: 3.5.13(typescript@5.7.3)
+    dev: false
 
   /magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}

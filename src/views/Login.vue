@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const loginData = ref({
+    email: '',
+    password: ''
+})
+
+const loginUser = () => {
+    console.log(loginData.value);
+}
+</script>
+
+
 <template>
     <div class="flex flex-col justify-center h-100 items-center mt-12 md:mt-44">
         <form class="flex flex-col bg-gray-900 p-10 md:p-16 rounded-2xl border border-white/20 backdrop-blur-lg shadow-lg w-full max-w-md"
@@ -10,7 +24,7 @@
       
             <label for="email" class="text-gray-300 mb-2">Email</label>
             <div class="relative">
-                <input type="email" id="email" placeholder="johndoe@gmail.com"
+                <input type="email" id="email" placeholder="johndoe@gmail.com" v-model="loginData.email"
                     class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
                 <span class="absolute right-3 top-3 text-gray-400">
                     📧
@@ -20,7 +34,7 @@
          
             <label for="password" class="text-gray-300 mt-4 mb-2">Password</label>
             <div class="relative">
-                <input type="password" id="password" placeholder="********"
+                <input type="password" id="password" placeholder="********" v-model="loginData.password"
                     class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
                 <span class="absolute right-3 top-3 text-gray-400">
                     🔒
@@ -33,7 +47,7 @@
             </a>
 
          
-            <button type="submit"
+            <button type="submit" @click="loginUser"
                 class="relative flex justify-center items-center bg-gradient-to-r from-[#673AB7] to-[#9C27B0] text-white rounded-4xl py-3 mt-6 font-semibold text-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9C27B0]">
                 Login
             </button>
