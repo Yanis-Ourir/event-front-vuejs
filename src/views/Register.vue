@@ -1,56 +1,81 @@
+<script setup lang="ts">
+import ErrorNotification from '@/components/ui/ErrorNotification.vue';
+import SuccessNotification from '@/components/ui/SuccessNotification.vue';
+import { ref } from 'vue';
+
+const registrationData = ref({
+    email: '',
+    password: '',
+    confirmPassword: ''
+})
+
+const registerUser = () => {
+    if(registrationData.value.password !== registrationData.value.confirmPassword) {
+        errorMessage.value = true;
+        return;
+    }
+    successMessage.value = true;
+}
+
+const successMessage = ref(false);
+const errorMessage = ref(false);
+
+</script>
+
+
 <template>
-    <div class="flex flex-col justify-center h-100 items-center mt-12 md:mt-44">
-        <form class="flex flex-col bg-gray-900 p-10 md:p-16 rounded-2xl border border-white/20 backdrop-blur-lg shadow-lg w-full max-w-md"
-            @submit.prevent="">
-            <!-- Titre -->
+    <div class="flex flex-col justify-center h-screen md:h-100 items-center md:mt-44">
+        <SuccessNotification v-if="successMessage" message="Registration successful!" />
+        <ErrorNotification v-if="errorMessage" message="Passwords do not match!" />
+        <form class="flex flex-col bg-gray-900 p-10 md:p-16 rounded-2xl border border-white/20 backdrop-blur-lg shadow-lg w-full max-w-md" @submit.prevent="">
+            
             <h1 class="text-4xl font-bold text-white text-center mb-8">
                 REGISTER <span class="text-gradient">EVENTLY</span>
             </h1>
 
-            <!-- Email -->
+            
             <label for="email" class="text-gray-300 mb-2">Email</label>
             <div class="relative">
-                <input type="email" id="email" placeholder="johndoe@gmail.com"
-                    class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
+                <input type="email" id="email" placeholder="johndoe@gmail.com" v-model="registrationData.email" class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
                 <span class="absolute right-3 top-3 text-gray-400">
                     📧
                 </span>
             </div>
 
-            <!-- Password -->
+            
             <label for="password" class="text-gray-300 mt-4 mb-2">Password</label>
             <div class="relative">
-                <input type="password" id="password" placeholder="********"
+                <input type="password" id="password" placeholder="********" v-model="registrationData.password"
                     class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
                 <span class="absolute right-3 top-3 text-gray-400">
                     🔒
                 </span>
             </div>
 
-            <!-- Confirmation Password -->
-            <label for="password" class="text-gray-300 mt-4 mb-2">Confirm Password</label>
+        
+            <label for="confirmPassword" class="text-gray-300 mt-4 mb-2">Confirm Password</label>
             <div class="relative">
-                <input type="password" id="password" placeholder="********"
+                <input type="password" id="confirmPassword" placeholder="********" v-model="registrationData.confirmPassword"
                     class="bg-gray-800 w-full rounded-lg px-4 py-2 border border-gray-700 focus:ring-2 focus:ring-violet-500 focus:outline-none transition-all" />
                 <span class="absolute right-3 top-3 text-gray-400">
                     🔒
                 </span>
             </div>
 
-            <!-- Bouton Login -->
-            <button type="submit"
-                class="relative flex justify-center items-center bg-gradient-to-r from-[#673AB7] to-[#9C27B0] text-white rounded-4xl py-3 mt-6 font-semibold text-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9C27B0]">
+        
+            <button type="submit" @click="registerUser"
+                class="relative flex cursor-pointer justify-center items-center bg-gradient-to-r from-[#673AB7] to-[#9C27B0] text-white rounded-4xl py-3 mt-6 font-semibold text-lg transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9C27B0]">
                 Register
             </button>
 
-            <!-- Inscription -->
+          
             <p class="text-center text-gray-400 text-sm mt-4">
                 Already have an account?
                 <a href="/login" class="text-white hover:underline">Login</a>
             </p>
 
             <!-- Bouton Google -->
-            <button class="flex items-center justify-center bg-gray-800 text-gray-300 border border-gray-600 rounded-xl py-2 mt-6 gap-4 hover:bg-gray-700 transition-all">
+            <button class="flex items-center justify-center bg-gray-800 text-gray-300 border border-gray-600 rounded-xl py-2 mt-6 gap-4 hover:bg-gray-700 transition-all cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262" class="h-6">
                     <path fill="#4285F4"
                         d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027">

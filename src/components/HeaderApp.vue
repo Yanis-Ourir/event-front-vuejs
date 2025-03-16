@@ -11,9 +11,9 @@ import ColorMode from './ui/ColorMode.vue';
             border border-white/20 dark:border-gray-600 
             backdrop-blur-lg shadow-[inset_0_0_8px_rgba(255,255,255,0.2)]">
             
-            <RouterLink to="/" class="text-white">Overview</RouterLink>
-            <RouterLink to="/register" class="text-white">Register</RouterLink>
-            <RouterLink to="/login" class="text-white">Login</RouterLink>
+            <RouterLink to="/" class="text-white hover:text-purple-400">Overview</RouterLink>
+            <RouterLink to="/register" class="text-white hover:text-purple-400">Register</RouterLink>
+            <RouterLink to="/login" class="text-white hover:text-purple-400">Login</RouterLink>
 
           </nav>
         </div>

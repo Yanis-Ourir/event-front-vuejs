@@ -12,19 +12,18 @@ const closeModal = () => {
     emit('closeFormModal')
 }
 
-const submitForm = () => {
-    console.log('Form submitted!')
-    console.log(event.value);
-    createEvent(event.value);
-}
-
 const event = ref({
     title: '',
     description: '',
     date: '',
     time: '',
     location: ''
-})
+});
+
+const submitForm = () => {
+    createEvent(event.value);
+}
+
 </script>
 
 <template>
