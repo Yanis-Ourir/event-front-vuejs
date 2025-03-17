@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref } from 'vue';
 import EventCard from '@/components/ui/EventCard.vue';
 import PastEventCard from '@/components/ui/PastEventCard.vue';
 import EventForm from '@/components/EventForm.vue';
-import { Search, Calendar, LayoutGrid, Clock, Filter, Plus, ArrowUpDown } from 'lucide-vue-next';
+import TabNav from '@/components/TabNav.vue';
+import FilterBar from '@/components/FilterBar.vue';
+import { PlusCircle } from 'lucide-vue-next';
 
-type Event = {
+export type Event = {
   title: string;
   date: string;
   description: string;
@@ -87,6 +89,10 @@ const resetFilters = () => {
   sortDirection.value = 'asc';
 };
 
+const handleSearch = (query: string) => {
+  searchQuery.value = query;
+};
+
 // Animation pour le panneau de filtres
 const filtersPanelClass = computed(() => {
   return showFilters.value ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0 pointer-events-none';
@@ -105,114 +111,22 @@ const filtersPanelClass = computed(() => {
       </header>
       
       
-      <div class="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-xl shadow-xl p-4 mb-8">
-        <div class="flex flex-col md:flex-row justify-between gap-4">
-         
-          <div class="relative flex-grow max-w-md">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <Search :size="18" class="text-purple-400" />
-            </div>
-            <input 
-              v-model="searchQuery" 
-              type="text" 
-              placeholder="Search events..." 
-              class="bg-gray-900 text-white w-full pl-10 pr-4 py-3 rounded-lg border border-gray-700 focus:border-purple-500 transition-all"
-            />
-          </div>
-          
-          
-          <div class="flex items-center gap-2">
-            <button 
-              @click="toggleViewMode" 
-              class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all"
-              :title="viewMode === 'grid' ? 'Switch to list view' : 'Switch to grid view'"
-            >
-              <LayoutGrid v-if="viewMode === 'grid'" :size="20" />
-              <span v-else>📋</span>
-            </button>
-            
-            <button 
-              @click="toggleSortDirection" 
-              class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all flex items-center gap-1"
-              :title="sortDirection === 'asc' ? 'Sort by date: newest first' : 'Sort by date: oldest first'"
-            >
-              <ArrowUpDown :size="20" />
-              <span class="hidden md:inline text-sm">{{ sortDirection === 'asc' ? 'Oldest first' : 'Newest first' }}</span>
-            </button>
-            
-            <button 
-              @click="showFilters = !showFilters" 
-              class="p-2 rounded-lg bg-gray-900 text-white hover:bg-purple-900 transition-all"
-              :class="{'bg-purple-800': showFilters}"
-            >
-              <Filter :size="20" />
-            </button>
-            
-            <button 
-              @click="formModal = true" 
-              class="text-white font-medium bg-gradient-to-r from-purple-600 to-fuchsia-600 px-4 py-2 rounded-lg transition-all hover:from-purple-500 hover:to-fuchsia-500 flex items-center gap-2"
-            >
-              <Plus :size="18" />
-              <span class="hidden md:inline">New Event</span>
-            </button>
-          </div>
-        </div>
-        
-        
-        <div 
-          class="mt-4 overflow-hidden transition-all duration-300 transform"
-          :class="filtersPanelClass"
-        >
-          <div class="bg-gray-900 rounded-lg p-4">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div class="flex flex-wrap gap-4">
-                <div>
-                  <label class="block text-sm text-gray-400 mb-1">Location</label>
-                  <select 
-                    v-model="selectedLocation" 
-                    class="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-700 focus:border-purple-500"
-                  >
-                    <option value="">All locations</option>
-                    <option v-for="location in locations" :key="location" :value="location">
-                      {{ location }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              
-              <button 
-                @click="resetFilters" 
-                class="text-purple-400 hover:text-purple-300 text-sm underline"
-              >
-                Reset filters
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <FilterBar
+        :showFilters="showFilters" 
+        :selectedLocation="selectedLocation" 
+        :sortDirection="sortDirection"
+        :viewMode="viewMode"
+        :searchQuery="searchQuery"
+        @search="handleSearch"
+        :toggleViewMode="toggleViewMode"
+        :toggleSortDirection="toggleSortDirection"
+        :filtersPanelClass="filtersPanelClass"
+        :resetFilters="resetFilters"
+        @openFormModal="formModal = true"
+        :events="filteredEvents"
+      />
       
-      <!-- Tabs de navigation -->
-      <div class="flex border-b border-gray-700 mb-6">
-        <button 
-          @click="setActiveTab('upcoming')" 
-          class="flex items-center gap-2 px-6 py-3 font-medium transition-all"
-          :class="activeTab === 'upcoming' ? 'text-white border-b-2 border-purple-500 -mb-px' : 'text-gray-400 hover:text-white'"
-        >
-          <Calendar :size="20" />
-          <span>Upcoming Events</span>
-          <span v-if="upcomingEvents.length > 0" class="bg-purple-600 text-white text-xs py-0.5 px-2 rounded-full ml-1">{{ upcomingEvents.length }}</span>
-        </button>
-        
-        <button 
-          @click="setActiveTab('past')" 
-          class="flex items-center gap-2 px-6 py-3 font-medium transition-all"
-          :class="activeTab === 'past' ? 'text-white border-b-2 border-purple-500 -mb-px' : 'text-gray-400 hover:text-white'"
-        >
-          <Clock :size="20" />
-          <span>Past Events</span>
-          <span v-if="pastEvents.length > 0" class="bg-gray-600 text-white text-xs py-0.5 px-2 rounded-full ml-1">{{ pastEvents.length }}</span>
-        </button>
-      </div>
+     <TabNav :activeTab="activeTab" :setActiveTab="setActiveTab" :upcomingEvents="upcomingEvents" :pastEvents="pastEvents" />
       
  
       <div class="min-h-[300px]">
@@ -233,7 +147,7 @@ const filtersPanelClass = computed(() => {
               @click="formModal = true" 
               class="mt-4 text-purple-400 hover:text-purple-300 flex items-center gap-2"
             >
-              <Plus :size="18" />
+              <PlusCircle :size="18" />
               <span>Create your first event</span>
             </button>
           </div>
