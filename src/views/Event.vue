@@ -30,12 +30,6 @@ const showFilters = ref(false);
 const selectedLocation = ref('');
 const viewMode = ref('grid'); 
 
-
-const locations = computed(() => {
-  const uniqueLocations = new Set(templateEvent.map(event => event.location));
-  return Array.from(uniqueLocations);
-});
-
 const filteredEvents = computed(() => {
   return templateEvent.filter(event => {
 
