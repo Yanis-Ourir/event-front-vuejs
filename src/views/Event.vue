@@ -87,7 +87,7 @@ const handleSearch = (query: string) => {
   searchQuery.value = query;
 };
 
-// Animation pour le panneau de filtres
+
 const filtersPanelClass = computed(() => {
   return showFilters.value ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0 pointer-events-none';
 });
