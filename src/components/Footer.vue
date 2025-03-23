@@ -1,5 +1,5 @@
 <template>
-    <footer class="border-t border-white/10 bg-black/10 mt-12 md:mt-42 px-12 w-full py-4">
+    <footer class="border-t border-white/10 bg-black/10 mt-12 md:mt-44 fixed bottom-0 px-12 w-full py-4">
         <div class="flex flex-col items-center justify-between sm:flex-row">
             <div class="flex items-center gap-4">
                 <img src="@/assets/logo.svg" alt="Logo" class="w-8 h-8"/>
