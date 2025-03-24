@@ -12,10 +12,10 @@
                     Made by <span class="font-bold text-gradient">Yanis Ourir</span>
                 </div>
                 <div>
-                    <a href="">
+                    <a href="https://github.com/Yanis-Ourir">
                         GitHub
                     </a>
-                    <a href="">
+                    <a href="https://fr.linkedin.com/in/yanis-ourir-85b9a927a">
                         LinkedIn
                     </a>
                 </div>
