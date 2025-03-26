@@ -26,4 +26,5 @@ export function logUserIn(data: User) {
 export function logout() {
     // remove token from local storage
     localStorage.removeItem('token');
+    window.location.href = '/';
 }

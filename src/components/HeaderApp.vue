@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import ColorMode from './ui/ColorMode.vue';
+import SwitchColor from './ui/SwitchColor.vue';
 </script>
+
+
 
 <template>
       <header class="flex justify-between items-center p-4">
@@ -17,6 +19,6 @@ import ColorMode from './ui/ColorMode.vue';
 
           </nav>
         </div>
-        <ColorMode />
+        <SwitchColor />
   </header>
 </template>

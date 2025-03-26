@@ -1,3 +1,13 @@
+<script setup lang="ts">
+
+function toggleDarkMode() {
+  document.body.classList.toggle('dark');
+}
+
+const isDarkMode = document.body.classList.contains('dark');
+
+</script>
+
 <template>
   <div class="px-6 py-2 rounded-2xl bg-white/10 dark:bg-black/20
             border border-white/20 dark:border-gray-600 
@@ -8,21 +18,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      isDarkMode: false,
-    };
-  },
-  methods: {
-    toggleDarkMode() {
-      this.isDarkMode = !this.isDarkMode;
-      document.documentElement.classList.toggle('dark-mode', this.isDarkMode);
-    },
-  },
-};
-</script>
+
 
 <style scoped>
 /* body.dark {
